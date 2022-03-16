@@ -9,10 +9,15 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private var total = 0.0;
     private var count = 0.0
+    private var overall = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,10 +43,12 @@ class MainActivity : AppCompatActivity() {
 
 
         }
-
+        val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.US)
+        getButton.doOnTextChanged { text, start, before, count ->
+            getButton.text = format.format(overall)
+        }
         getButton.setOnClickListener{
-            val overall = total * 0.15;
-            val message = Toast.makeText(this, "Thanks for your tip your tip was $count", Toast.LENGTH_LONG)
+            val message = Toast.makeText(this, "Thanks for your tip your tip was $" + "$overall", Toast.LENGTH_LONG)
             message.show();
         }
 
